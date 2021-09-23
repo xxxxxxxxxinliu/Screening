@@ -138,7 +138,7 @@ function preload(){
 	theShader0 = loadShader('shaders/shader1.vert', 'shaders/shader1.frag');
 	//Shader
 	theShader = new p5.Shader(this.renderer,vert,frag);
-	Img = loadImage('Asset/bgAssets/light.jpg');
+	Img = loadImage('Asset/bgAssets/canvastexture.png');
 
 
 	
