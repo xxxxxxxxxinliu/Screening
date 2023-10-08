@@ -10,9 +10,7 @@ let vx5=0;
 
 var playButton;
 var timerButton;
-
 var languageBtn;
-
 var scanImage;
 var scanCanvas;
 let scanLine = 0;
@@ -24,11 +22,9 @@ var counter =0;
 var seconds,minutes;
 
 
-
 let overAlltexture;
 let texture1;
 let texture2;
-
 
 let startCanvas;
 
@@ -37,8 +33,6 @@ let theShader;
 let Img;
 let WebglCanvas;
 let WebglCanvas2;
-
-
 
 
 //text
@@ -60,21 +54,11 @@ let typeNum;
 
   
 
-
-
-
-
-
 // cloud image
 let cloud=[];
 let cloud1img;
-
-
-
-
 var vx =0;
 let info=[];
-
 
 
 //glitch
@@ -106,17 +90,11 @@ let chFont;
 
 
 
+
+
 function preload(){
 
 	mic= loadSound("Asset/Sound/noise1min.mp3");
-	// fft = new p5.FFT(0.0, 1024);
-
-
-
-	// mic.connect(fft);
-	// mic.onended(soundloop);
-
-
 
 	scanImage = loadImage("Asset/Image/testcloud.jpeg");
 
@@ -133,15 +111,11 @@ function preload(){
 	moveCh = loadTable("Asset/CSV/moveScript-c.csv","csv", "header");
 	popCh= loadTable("Asset/CSV/popScript-c.csv","csv", "header");
 
-
-	
+	//load Shader
 	theShader0 = loadShader('shaders/shader1.vert', 'shaders/shader1.frag');
-	//Shader
 	theShader = new p5.Shader(this.renderer,vert,frag);
 	Img = loadImage('Asset/bgAssets/canvastexture.png');
 
-
-	
 	// preload cloud images, cloud1img, cloud2img, cloud3img, etc.... please add more....
 	cloud1img = loadImage("Asset/Image/cloud1.png");
 
@@ -151,14 +125,7 @@ function preload(){
 	cloud[2] = new Cloud(windowWidth,windowHeight/5,cloud1img,2,35000,false);
 	cloud[3] = new Cloud(windowWidth,windowHeight/5,cloud1img,3,35000,false);
 
-
-
-	// sounds[0]= loadSound("Asset/Sound/1.mp3");
-	// sounds[1]= loadSound("Asset/Sound/02.mp3");
-	// sounds[2]= loadSound("Asset/Sound/03.mp3");
-	// sounds[3]= loadSound("Asset/Sound/04.mp3");
-	// sounds[4]= loadSound("Asset/Sound/05.mp3");
-	// sounds[5]= loadSound("Asset/Sound/06.mp3");
+	//load sound chunks
 	sounds[0]= loadSound("Asset/Sound/000.mp3");
 	sounds[1]= loadSound("Asset/Sound/001.mp3");
 	sounds[2]= loadSound("Asset/Sound/002.mp3");
@@ -166,114 +133,28 @@ function preload(){
 	sounds[4]= loadSound("Asset/Sound/004.mp3");
 	sounds[5]= loadSound("Asset/Sound/005.mp3");
 	
-
-
-
 }
 
 
 function setup() {
 
 
-
-//new
-fft = new p5.FFT(0.0, 1024);
-sounds[seq].connect(fft);
-sounds[seq].onended(soundloop);
-
-
-sounds[0].play();
-sounds[0].amp(1);
-
+	//new
+	fft = new p5.FFT(0.0, 1024);
+	sounds[seq].connect(fft);
+	sounds[seq].onended(soundloop);
+	sounds[0].play();
+	sounds[0].amp(1);
 	frameRate(10);
-
-	//timer
-	// timer =createP('timer');
-	// setInterval(timeIt,1000);
-	// timer.position(7/10*windowWidth,30);
-	//timer.style('color','#ffffff');
-
-
-
 	background(0);
-
-
-
-	//glitchjs
-	//scriptGlitch = new Glitch();
-
 	startCanvas = createGraphics(windowWidth,windowHeight);
 	scriptCanvas = createGraphics(windowWidth,windowHeight);
 	scanCanvas = createGraphics(windowWidth,windowHeight);
-	// pixelDensity(1);
-	// noStroke();
-
-
-	// //button
-	// playButton = createButton("start");
-	// playButton.addClass("connectBtn");
-	// playButton.mousePressed(togglePlaying);
-	// playButton.position(50,50);
-
-	// //timer button
-	// timerButton = createButton("0:00");
-	// timerButton.addClass("connectBtn");
-	// timerButton.mousePressed(timeIt);
-	// timerButton.position(200,50);
-	// setInterval(timeIt,1000);
-
-
-
-
-	// if(mic.isPlaying()){
-	// 	setInterval(togglePlaying,1000);
-	// }
-
 	
-
-	// languageBtn = createButton("Switch to Chinese Version");
-	// languageBtn.addClass("connectBtn");
-	// languageBtn.mousePressed(languageSwitch);
-	// languageBtn.position(400,50);
-
-
-
-	// for(let i = 0; i< 5 ; i++){
-	// 	playButtons[0] = createButton("1st play");
-	// 	playButtons[1] = createButton("2nd play");
-	// 	playButtons[2] = createButton("3rd play");
-	// 	playButtons[3] = createButton("4th play");
-	// 	playButtons[4] = createButton("5th play");
-	// 	playButtons[i].position(80*i+10,20);
-	// 	playButtons[i].mousePressed(togglePlaying);
-	// 	// playButtons[1].mousePressed(togglePlaying1);
-	// 	// playButtons[2].mousePressed(togglePlaying2);
-	// 	// playButtons[3].mousePressed(togglePlaying3);
-	// 	// playButtons[4].mousePressed(togglePlaying4);
-
-	// }
-
-	// if(playButtons[0].mousePressed == true){
-	// 	mic = sounds[0];
-	// }
-	// else if(playButtons[1].mousePressed == true){
-	// 	mic = sounds[1];
-	// }
-	// else if(playButtons[2].mousePressed == true){
-	// 	mic = sounds[2];
-	// }
-	// else if(playButtons[3].mousePressed == true){
-	// 	mic = sounds[3];
-	// }
-	// else if(playButtons[4].mousePressed == true){
-	// 	mic = sounds[4];
-	// }
-	
-
-
+	// monitor size setup
 	createCanvas(1920, 5400);
 
-	//shader
+	//shader setup
     WebglCanvas = createGraphics(1920,5400,WEBGL);
 	pixelDensity(1);
 	noStroke();
@@ -283,17 +164,12 @@ sounds[0].amp(1);
 	noStroke();
     
 
-//	historygram = createGraphics(windowWidth*20,5000);
-//	historygram = createGraphics(windowWidth,50000);
 
+	// text script running
 	moveScript=moveEn;
 	popScript=popEn;
-	
-
 	moveNum = moveScript.getRowCount();
 		
-	//print(moveNum);
-
 	let x = moveScript.getColumn("X");
 	let y = moveScript.getColumn("Y");
 	let text = moveScript.getColumn("Text");
@@ -302,16 +178,12 @@ sounds[0].amp(1);
 	let size = moveScript.getColumn("Size");
 	let speed = moveScript.getColumn("Speed");
 	let time = moveScript.getColumn("Borntime");
-	//let isDisplayed = moveScript.getColumn("Default");
+	
 
 	for(let i = 0; i< moveNum ; i++){
 		dialogs[i]= new Dialog(Number(x[i])*windowWidth, Number(y[i])*windowHeight, text[i], eval(font[i]),color[i],Number(size[i]),Number(speed[i]),Number(time[i]),false);
-
 	}
-	//print(dialogs[0]);
-	//print(dialogs[1]);
-
-
+	
 
 	popNum = popScript.getRowCount();
 
@@ -330,7 +202,6 @@ sounds[0].amp(1);
 	for(let z = 0; z< popNum ; z++){
 	
 		dialogp[z]= new DialogP(Number(px[z])*windowWidth, Number(py[z])*windowHeight, ptext[z], eval(pfont[z]),pcolor[z],Number(psize[z]),pborntime[z],pdeadtime[z],false);
-		//print(pfont);
 		
 	}
 
@@ -363,7 +234,6 @@ sounds[0].amp(1);
 	maincanvas[3] = createGraphics(windowWidth,10000);
 	maincanvas[4] = createGraphics(windowWidth,10000);
 	maincanvas[5] = createGraphics(windowWidth,10000);
-	//maincanvas[3] = createGraphics(windowWidth,50000);
 	
 }
 
@@ -371,71 +241,35 @@ sounds[0].amp(1);
 
 function draw() {
 
-	// mic.play();
 	sounds[seq].onended(soundloop);
-	
-	
 	frameRate(10);
-
-
 	background(0);
-
-	//drawImage2();
-	
-	
-
-	//theShader.setUniform('u_resolution',[width/1000,height/4000])
 	theShader.setUniform('u_resolution',[width,height])
 	theShader.setUniform('u_time',millis()/1000)
 	theShader.setUniform('tex0',WebglCanvas)
 	theShader.setUniform('tex1',Img)
 	WebglCanvas2.shader(theShader)
-	// webGLGraphics2.rect(00,width,height)
-//	WebglCanvas2.rect(-width/2,-height/2,width,height)
 	WebglCanvas2.rect(-width/2,-height/2,5400,6000)
-	// WebglCanvas2.rect(0,0,6000,5400)
-	// WebglCanvas2.rect(-width,-height/2,5400,5400)
-
-//	WebglCanvas2.rect(0,0,1920,5400)
 
 
-
-	
-	
-	//shader 0
-	//WebglCanvas.shader(theShader0);
-//	theShader0.setUniform("iResolution", [width, height]);
-//	theShader0.setUniform("iFrame", frameCount);
-//	theShader0.setUniform('tex',Img)
-		// rect gives us some geometry on the screen
-	//	WebglCanvas.rect(0,0,width, height);
-	//	image(WebglCanvas,0,0);	
-  
-
-
-//		if(frameCount%100 > 10 && frameCount%100 <15)
-//	{
-		//glitch();
-		
-//	}
-	
-
-  
-	// startCanvas.textSize(16);
-	// startCanvas.textFont(enFont);
-	// startCanvas.text("press any key to start",20,50);
-	// startCanvas.fill(100);
-	//image(startCanvas,0,0);
-	//clear(0,0,width*2,height)
-
+	// draw strokes on 5 canvases
 
 	if(seq >=0){
-
 	vx=vx+5;
 	spectrum = fft.analyze();
 	if(frameCount%200==0){console.log(vx+"vxxxxx");}
+	
 
-	// draw sound stroke
+	//define stroke color
+	let colorR = 176 + random(-50,100);
+	let colorG = 73 + random(10,50);
+	let colorB = 20 + random(-30,30);
+
+	
+
+
+
+		// draw sound stroke
 	for (let i = maxFreqHz; i >= minFreqHz; i--) {
 			let index = maxFreqHz - i;
 			let energy1000 = fft.getEnergy(1000);
@@ -447,61 +281,37 @@ function draw() {
 			// new
 			let transp = map(intensity,150,255,0,100);
 			let widthhis = map(intensity,0,400,1,10);
-			//historygram.stroke(intensity/3,intensity/3,intensity/3,transp);
 			maincanvas[0].stroke(intensity/3,intensity/3,intensity/3,transp);
 
 			if(frameCount % 10 <3){
-				//historygram.stroke(218,18,32,50,90);
 				maincanvas[0].stroke(218,18,32,50,90);
 			}
 			else if(frameCount % 10 >=3 && frameCount <6)
 			{
-				//historygram.stroke(106,33,228);
 				maincanvas[0].stroke(106,33,228);
 			}
 			else if(frameCount%10 >=6){
-				//historygram.stroke(21,49,190,80);
 				maincanvas[0].stroke(21,49,190,90);
 			}
 
-		  //  if(frameCount %20 == 0) {console.log("intensity="+intensity); console.log("1000energy"+fft.getEnergy(1000))}
+
 
 			if(intensity>120){
-			
-
-				// let y = index / (maxFreqHz - minFreqHz - 1) * height;
-				// historygram.line(vx-2+intensityX,y, vx+intensityX,y);
 
 				let x = index / (maxFreqHz - minFreqHz - 1) * windowWidth;
-				//historygram.line(x,height+2-vx, x,height-vx);
 				maincanvas[0].line(x,height+3-vx, x,height-vx);
 			}
 
 			if(intensity>220){
-
-				//historygram.stroke(intensity,intensity,intensity,transp/5);
 				maincanvas[0].stroke(intensity,intensity,intensity,transp/5);
 				let x = index / (maxFreqHz - minFreqHz - 1) * width;
-				//historygram.noStroke();
 				maincanvas[0].noStroke();
-				let colorR = 176 + random(-50,100);
-				let colorG = 73 + random(10,50);
-				let colorB = 20 + random(-30,30);
-				// historygram.fill(colorR,colorG,colorB,2);
-				// //historygram.rect(vx,y,widthhis,2);
-				// historygram.rect(x,height-vx,widthhis,2);
-				// historygram.fill(colorR,colorG,colorB,5);
-				// historygram.ellipse(x,height-vx,widthhis+10);
-				// historygram.fill(colorR,colorG,colorB,7);
-				// historygram.ellipse(x,height-vx,widthhis+6);
-				// historygram.fill(colorR,colorG,colorB,9);
-				// historygram.ellipse(x,height-vx,widthhis+3);
-				// historygram.fill(colorR,colorG,colorB,11);
-				// historygram.ellipse(x,height-vx,widthhis);
+				// let colorR = 176 + random(-50,100);
+				// let colorG = 73 + random(10,50);
+				// let colorB = 20 + random(-30,30);
 
-
+				// stroke color(R,G,B,,alpha)
 				maincanvas[0].fill(colorR,colorG,colorB,2);
-				//historygram.rect(vx,y,widthhis,2);
 				maincanvas[0].rect(x,height-vx,widthhis,2);
 				maincanvas[0].fill(colorR,colorG,colorB,5);
 				maincanvas[0].ellipse(x,height-vx,widthhis+10);
@@ -519,11 +329,11 @@ function draw() {
 
 
 
-		// 第二个
+		// 第二个Canvas
 		if(seq >= 1){
 			vx1=vx1+5;
 			spectrum = fft.analyze();
-			if(frameCount%200==0){console.log(vx1+"v1111xxxxx");}
+		
 		
 			// draw sound stroke
 			for (let i = maxFreqHz; i >= minFreqHz; i--) {
@@ -537,61 +347,36 @@ function draw() {
 					// new
 					let transp = map(intensity,150,255,0,100);
 					let widthhis = map(intensity,0,400,1,10);
-					//historygram.stroke(intensity/3,intensity/3,intensity/3,transp);
 					maincanvas[1].stroke(intensity/3,intensity/3,intensity/3,transp);
 		
 					if(frameCount % 10 <3){
-						//historygram.stroke(218,18,32,50,90);
 						maincanvas[1].stroke(218,18,32,50,90);
 					}
 					else if(frameCount % 10 >=3 && frameCount <6)
 					{
-						//historygram.stroke(106,33,228);
 						maincanvas[1].stroke(106,33,228);
 					}
 					else if(frameCount%10 >=6){
-						//historygram.stroke(21,49,190,80);
+				
 						maincanvas[1].stroke(21,49,190,80);
 					}
 		
-				  //  if(frameCount %20 == 0) {console.log("intensity="+intensity); console.log("1000energy"+fft.getEnergy(1000))}
+			
 		
 					if(intensity>120){
-					
-		
-						// let y = index / (maxFreqHz - minFreqHz - 1) * height;
-						// historygram.line(vx-2+intensityX,y, vx+intensityX,y);
-		
 						let x = index / (maxFreqHz - minFreqHz - 1) * windowWidth;
-						//historygram.line(x,height+2-vx, x,height-vx);
 						maincanvas[1].line(x,height+2-vx1, x,height-vx1);
 					}
 		
 					if(intensity>200){
-		
-						//historygram.stroke(intensity,intensity,intensity,transp/5);
+
 						maincanvas[1].stroke(intensity,intensity,intensity,transp/5);
 						let x = index / (maxFreqHz - minFreqHz - 1) * width;
-						//historygram.noStroke();
 						maincanvas[1].noStroke();
-						let colorR = 176 + random(-50,100);
-						let colorG = 73 + random(10,50);
-						let colorB = 20 + random(-30,30);
-						// historygram.fill(colorR,colorG,colorB,2);
-						// //historygram.rect(vx,y,widthhis,2);
-						// historygram.rect(x,height-vx,widthhis,2);
-						// historygram.fill(colorR,colorG,colorB,5);
-						// historygram.ellipse(x,height-vx,widthhis+10);
-						// historygram.fill(colorR,colorG,colorB,7);
-						// historygram.ellipse(x,height-vx,widthhis+6);
-						// historygram.fill(colorR,colorG,colorB,9);
-						// historygram.ellipse(x,height-vx,widthhis+3);
-						// historygram.fill(colorR,colorG,colorB,11);
-						// historygram.ellipse(x,height-vx,widthhis);
-		
-		
+						// let colorR = 176 + random(-50,100);
+						// let colorG = 73 + random(10,50);
+						// let colorB = 20 + random(-30,30);
 						maincanvas[1].fill(colorR,colorG,colorB,2);
-						//historygram.rect(vx,y,widthhis,2);
 						maincanvas[1].rect(x,height-vx1,widthhis,2);
 						maincanvas[1].fill(colorR,colorG,colorB,5);
 						maincanvas[1].ellipse(x,height-vx1,widthhis+10);
@@ -606,7 +391,7 @@ function draw() {
 				}
 		}
 
-				// 第3个
+				// 第3个Canvas
 				if(seq >= 2){
 					vx2=vx2+5;
 					spectrum = fft.analyze();
@@ -661,9 +446,9 @@ function draw() {
 								let x = index / (maxFreqHz - minFreqHz - 1) * width;
 								//historygram.noStroke();
 								maincanvas[2].noStroke();
-								let colorR = 176 + random(-50,100);
-								let colorG = 73 + random(10,50);
-								let colorB = 20 + random(-30,30);
+								// let colorR = 176 + random(-50,100);
+								// let colorG = 73 + random(10,50);
+								// let colorB = 20 + random(-30,30);
 								// historygram.fill(colorR,colorG,colorB,2);
 								// //historygram.rect(vx,y,widthhis,2);
 								// historygram.rect(x,height-vx,widthhis,2);
@@ -697,7 +482,7 @@ function draw() {
 
 
 
-		//si
+		// the fourth canvas
 
 						if(seq >= 3){
 							vx3=vx3+5;
@@ -753,9 +538,9 @@ function draw() {
 										let x = index / (maxFreqHz - minFreqHz - 1) * width;
 										//historygram.noStroke();
 										maincanvas[3].noStroke();
-										let colorR = 176 + random(-50,100);
-										let colorG = 73 + random(10,50);
-										let colorB = 20 + random(-30,30);
+										// let colorR = 176 + random(-50,100);
+										// let colorG = 73 + random(10,50);
+										// let colorB = 20 + random(-30,30);
 										// historygram.fill(colorR,colorG,colorB,2);
 										// //historygram.rect(vx,y,widthhis,2);
 										// historygram.rect(x,height-vx,widthhis,2);
@@ -786,7 +571,7 @@ function draw() {
 						}	
 						
 						
-		//wu
+		//the fifth canvas
 						
 						if(seq >= 4){
 							vx4=vx4+5;
@@ -842,9 +627,9 @@ function draw() {
 										let x = index / (maxFreqHz - minFreqHz - 1) * width;
 										//historygram.noStroke();
 										maincanvas[4].noStroke();
-										let colorR = 176 + random(-50,100);
-										let colorG = 73 + random(10,50);
-										let colorB = 20 + random(-30,30);
+										// let colorR = 176 + random(-50,100);
+										// let colorG = 73 + random(10,50);
+										// let colorB = 20 + random(-30,30);
 										// historygram.fill(colorR,colorG,colorB,2);
 										// //historygram.rect(vx,y,widthhis,2);
 										// historygram.rect(x,height-vx,widthhis,2);
@@ -930,9 +715,9 @@ function draw() {
 										let x = index / (maxFreqHz - minFreqHz - 1) * width;
 										//historygram.noStroke();
 										maincanvas[5].noStroke();
-										let colorR = 176 + random(-50,100);
-										let colorG = 73 + random(10,50);
-										let colorB = 20 + random(-30,30);
+										// let colorR = 176 + random(-50,100);
+										// let colorG = 73 + random(10,50);
+										// let colorB = 20 + random(-30,30);
 										// historygram.fill(colorR,colorG,colorB,2);
 										// //historygram.rect(vx,y,widthhis,2);
 										// historygram.rect(x,height-vx,widthhis,2);
@@ -963,118 +748,17 @@ function draw() {
 						}
 
 
-		// // 第二个
-		// if(seq >= 1){
-		// 	vx1=vx1+5;
-		// 	spectrum = fft.analyze();
-		// 	if(frameCount%20==0){console.log(vx1+"v1111xxxxx");}
-		
-		// 	// draw sound stroke
-		// 	for (let i = maxFreqHz; i >= minFreqHz; i--) {
-		// 			let index = maxFreqHz - i;
-		// 			let energy1000 = fft.getEnergy(1000);
-		// 			let iEngergy = fft.getEnergy(i);
-		
-		// 			let intensity = (fft.getEnergy(i)-fft.getEnergy(1000))*2.5;
-		// 			let intensityX= map(intensity,0,300,0.5,5);
-		
-		// 			// new
-		// 			let transp = map(intensity,150,255,0,100);
-		// 			let widthhis = map(intensity,0,400,1,10);
-		// 			//historygram.stroke(intensity/3,intensity/3,intensity/3,transp);
-		// 			maincanvas[seq].stroke(intensity/3,intensity/3,intensity/3,transp);
-		
-		// 			if(frameCount % 10 <3){
-		// 				//historygram.stroke(218,18,32,50,90);
-		// 				maincanvas[seq].stroke(218,18,32,50,90);
-		// 			}
-		// 			else if(frameCount % 10 >=3 && frameCount <6)
-		// 			{
-		// 				//historygram.stroke(106,33,228);
-		// 				maincanvas[seq].stroke(106,33,228);
-		// 			}
-		// 			else if(frameCount%10 >=6){
-		// 				//historygram.stroke(21,49,190,80);
-		// 				maincanvas[seq].stroke(21,49,190,80);
-		// 			}
-		
-		// 		  //  if(frameCount %20 == 0) {console.log("intensity="+intensity); console.log("1000energy"+fft.getEnergy(1000))}
-		
-		// 			if(intensity>120){
-					
-		
-		// 				// let y = index / (maxFreqHz - minFreqHz - 1) * height;
-		// 				// historygram.line(vx-2+intensityX,y, vx+intensityX,y);
-		
-		// 				let x = index / (maxFreqHz - minFreqHz - 1) * windowWidth;
-		// 				//historygram.line(x,height+2-vx, x,height-vx);
-		// 				maincanvas[seq].line(x,height+2-vx, x,height-vx);
-		// 			}
-		
-		// 			if(intensity>200){
-		
-		// 				//historygram.stroke(intensity,intensity,intensity,transp/5);
-		// 				maincanvas[seq].stroke(intensity,intensity,intensity,transp/5);
-		// 				let x = index / (maxFreqHz - minFreqHz - 1) * width;
-		// 				//historygram.noStroke();
-		// 				maincanvas[seq].noStroke();
-		// 				let colorR = 176 + random(-50,100);
-		// 				let colorG = 73 + random(10,50);
-		// 				let colorB = 20 + random(-30,30);
-		// 				// historygram.fill(colorR,colorG,colorB,2);
-		// 				// //historygram.rect(vx,y,widthhis,2);
-		// 				// historygram.rect(x,height-vx,widthhis,2);
-		// 				// historygram.fill(colorR,colorG,colorB,5);
-		// 				// historygram.ellipse(x,height-vx,widthhis+10);
-		// 				// historygram.fill(colorR,colorG,colorB,7);
-		// 				// historygram.ellipse(x,height-vx,widthhis+6);
-		// 				// historygram.fill(colorR,colorG,colorB,9);
-		// 				// historygram.ellipse(x,height-vx,widthhis+3);
-		// 				// historygram.fill(colorR,colorG,colorB,11);
-		// 				// historygram.ellipse(x,height-vx,widthhis);
-		
-		
-		// 				maincanvas[seq].fill(colorR,colorG,colorB,2);
-		// 				//historygram.rect(vx,y,widthhis,2);
-		// 				maincanvas[seq].rect(x,height-vx,widthhis,2);
-		// 				maincanvas[seq].fill(colorR,colorG,colorB,5);
-		// 				maincanvas[seq].ellipse(x,height-vx,widthhis+10);
-		// 				maincanvas[seq].fill(colorR,colorG,colorB,7);
-		// 				maincanvas[seq].ellipse(x,height-vx,widthhis+6);
-		// 				maincanvas[seq].fill(colorR,colorG,colorB,9);
-		// 				maincanvas[seq].ellipse(x,height-vx,widthhis+3);
-		// 				maincanvas[seq].fill(colorR,colorG,colorB,11);
-		// 				maincanvas[seq].ellipse(x,height-vx,widthhis);
-		// 			}
-		
-		// 		}
-		// }
-
-
-	
 
 
 	image(WebglCanvas2,0,0,width,height);
-//	image(WebglCanvas2,0,0);
-//	image(WebglCanvas2,-200,0,1920,5400);
-//	image(WebglCanvas2,0,1080,width,height);
-	//image(WebglCanvas2,0,0,width,height);
+
 
 	push()
-	//blendMode(HARD_LIGHT)
 	blendMode(DIFFERENCE)
-
-	//image(texture1,0,0,width,height)
-	
 	blendMode(DARKEST)
-	//image(texture2,0,0,width,height)
 
 	pop()
 	
-	//drawImage2();
-	
-	//image(historygram, windowWidth-vx,0);
-	//image(historygram, 0,-5000+vx);
 	image(maincanvas[0],0,-5400+vx);
 	image(maincanvas[1],0,-5400+vx1);
 	image(maincanvas[2],0,-5400+vx2);
@@ -1082,43 +766,6 @@ function draw() {
 	image(maincanvas[4],0,-5400+vx4);
 	image(maincanvas[5],0,-5400+vx5);
 
-	
-
-	
-
-
-
-
-		
-
-	
-		// // info text
-		// textSize(16);
-		// textFont(enFont);
-		// fill(255);
-		// text("2020-12-30--10-12-11--593_pX.fots",1/25*width,15/20*height);
-		// textSize(25);
-		// text("age:2s",1/25*width,16/20*height);
-		// text("ctr_s:5[nc]",1/25*width,50/60*height);
-		// text("ctr_f: 1759",1/25*width,52/60*height);
-		// text("lat:-77.04°",1/25*width,54/60*height);
-		// text("lst:13.89 hrs",1/25*width,56/60*height);
-		// fill(255);
-		
-		// textSize(18);
-		// text("age:2s",5/25*width,16/20*height);
-		// text("ctr_s:5[nc]",5/25*width,50/60*height);
-		// text("ctr_f: 1759",5/25*width,52/60*height);
-		// text("lat:-77.04°",5/25*width,54/60*height);
-		// text("lst:13.89 hrs",5/25*width,56/60*height);
-		// fill(255);
-
-		//glitch();
-	
-	
-		//image(overAlltexture,0,0,width,height);
-	
-		//script();
 		image(scriptCanvas,0,0);
 	
 		
@@ -1131,32 +778,20 @@ function draw() {
 		}
 		
 
-	
-
-
 	if(frameCount%100>80 && frameCount%100<95){
 	//	glitch1();
 	}
-
-
-	
-
-
 
 }
 
 
 function timeIt(){
-	// if(!mic.isPlaying()){
-	// 	timerButton.html("connecting");
-	// }
 
-	// if(mic.isPlaying()){
 	counter++;
 	minutes =floor(counter/60);
 	seconds = counter%60;
 	timerButton.html(+ minutes + ":"+ seconds);
-// }
+
 }
 
 
@@ -1181,10 +816,6 @@ function timeIt(){
 
   */
 
-
-
-
-
 //   function timerCount(){
 // 	  if(mic.isPlaying()){
 // 		counter++;
@@ -1199,19 +830,11 @@ function timeIt(){
 
 
   function soundloop(){
-	//   mic.play();
-	//   mic.amp(1);                                      
-	  //mic.onended(soundloop);
-	//   historygram = createGraphics(windowWidth*10, height);
-	//   vx = 0;
-
-
 	  seq += 1;
 	  sounds[seq].play();
 	  sounds[seq].amp(1); 
 	  sounds[seq].connect(fft);
 	  console.log("this is number" + seq);
-	 // vx = 0;
   }
 
 
@@ -1241,13 +864,6 @@ function script(){
 			dialogT[q].show();
 		}
 
-		// for(o=0;o<cloud.length;o++){
-		// 	cloud[o].show();
-		// }
-
-
-
-	//}
 		
   }
 
@@ -1284,38 +900,36 @@ function script(){
 	set(x2, y2, col);
   }
 
-//   function windowResized() {
-// 	resizeCanvas(windowWidth, windowHeight);
-//   }
 
 
-  function drawImage2(){
-    scanImage.resize(windowWidth,0);
-    let pixelColors = [];
 
-    if(scanLine<=height){
-        for(let s=0; s<width; s++) {
-            pixelColors[s] = scanImage.get(s,scanLine);
-            let clr = color(pixelColors[s]);
-            clr.setAlpha(100);
-        }
-    }
+//   function drawImage2(){
+//     scanImage.resize(windowWidth,0);
+//     let pixelColors = [];
 
-    for (let s=0; s<windowWidth;s++) {
-        scanCanvas.noStroke();
-        scanCanvas.fill(pixelColors[s]);
-        scanCanvas.rect(s,scanLine,5,2);
-    }
+//     if(scanLine<=height){
+//         for(let s=0; s<width; s++) {
+//             pixelColors[s] = scanImage.get(s,scanLine);
+//             let clr = color(pixelColors[s]);
+//             clr.setAlpha(100);
+//         }
+//     }
+
+//     for (let s=0; s<windowWidth;s++) {
+//         scanCanvas.noStroke();
+//         scanCanvas.fill(pixelColors[s]);
+//         scanCanvas.rect(s,scanLine,5,2);
+//     }
 
 
-    push();
-    blendMode(ADD);
-    blendMode(OVERLAY);
-    image(scanCanvas,0,0);
-    pop();
+//     push();
+//     blendMode(ADD);
+//     blendMode(OVERLAY);
+//     image(scanCanvas,0,0);
+//     pop();
 
-    scanLine = scanLine + 1;
-}
+//     scanLine = scanLine + 1;
+// }
 
 
 
